@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import common.currentTimeAt
 import example.dataclass.Country
 import example.dataclass.countries
+import example.views.DateTimeExample
 import kotlinx.datetime.Clock
 import kotlinx.datetime.IllegalTimeZoneException
 import kotlinx.datetime.LocalDateTime
@@ -45,49 +46,7 @@ import org.jetbrains.compose.resources.DrawableResource
 @Preview
 fun App(countries: List<Country> = countries()) {
     MaterialTheme {
-        var showCountries by remember { mutableStateOf(false) }
-        var timeAtLocation by remember { mutableStateOf("No location Selected") }
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(
-                timeAtLocation,
-                style = TextStyle(
-                    fontSize = 20.sp
-                ),
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
-            )
-            Row(modifier = Modifier.padding(start = 20.dp, top = 10.dp)) {
-                DropdownMenu(
-                    expanded = showCountries,
-                    onDismissRequest = {
-                        showCountries = false
-                    }
-                ) {
-                    countries.forEach { (name, zone, image) ->
-                        DropdownMenuItem(
-                            onClick = {
-                                timeAtLocation = currentTimeAt(name, zone)
-                                showCountries = false
-                            }
-                        ) {
-                            Image(
-                                painterResource(image),
-                                modifier = Modifier.size(50.dp).padding(end = 10.dp),
-                                contentDescription = "$name flag"
-                            )
-                            Text(name)
-                        }
-                    }
-                }
-            }
-            Button(
-                modifier = Modifier.padding(top = 10.dp),
-                onClick = {
-                    showCountries = !showCountries
-                }) {
-                Text("Select Location")
-            }
-        }
+        DateTimeExample(countries)
     }
 
 }
