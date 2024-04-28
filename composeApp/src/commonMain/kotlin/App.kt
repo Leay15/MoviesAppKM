@@ -18,6 +18,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import common.currentTimeAt
+import example.dataclass.Country
+import example.dataclass.countries
 import kotlinx.datetime.Clock
 import kotlinx.datetime.IllegalTimeZoneException
 import kotlinx.datetime.LocalDateTime
@@ -36,18 +39,6 @@ import moviesappkm.composeapp.generated.resources.id
 import moviesappkm.composeapp.generated.resources.jp
 import moviesappkm.composeapp.generated.resources.mx
 import org.jetbrains.compose.resources.DrawableResource
-
-@OptIn(ExperimentalResourceApi::class)
-data class Country(val name: String, val zone: TimeZone, val image: DrawableResource)
-
-@OptIn(ExperimentalResourceApi::class)
-fun countries() = listOf(
-    Country("Japan", TimeZone.of("Asia/Tokyo"), Res.drawable.jp),
-    Country("France", TimeZone.of("Europe/Paris"), Res.drawable.fr),
-    Country("Mexico", TimeZone.of("America/Mexico_City"), Res.drawable.mx),
-    Country("Indonesia", TimeZone.of("Asia/Jakarta"), Res.drawable.id),
-    Country("Egypt", TimeZone.of("Africa/Cairo"), Res.drawable.eg)
-)
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -99,27 +90,4 @@ fun App(countries: List<Country> = countries()) {
         }
     }
 
-}
-
-fun currentTimeAt(location: String, zone: TimeZone): String {
-    fun LocalTime.formatted() = "$hour:${
-        if (minute < 10) {
-            "0$minute"
-        } else minute
-    }:$second"
-
-    return try {
-        val time = Clock.System.now()
-        val localTime = time.toLocalDateTime(zone).time
-        "The time in $location is ${localTime.formatted()}"
-    } catch (ex: IllegalTimeZoneException) {
-        "Cannot Get time in Location"
-    }
-}
-
-fun todaysDate(): String {
-    fun LocalDateTime.format() = toString().substringBefore('T')
-    val now = Clock.System.now()
-    val zone = TimeZone.currentSystemDefault()
-    return now.toLocalDateTime(zone).format()
 }
