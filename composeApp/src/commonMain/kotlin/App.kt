@@ -44,7 +44,7 @@ fun countries() = listOf(
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
-fun App() {
+fun App(countries: List<Country> = countries()) {
     MaterialTheme {
         var showCountries by remember { mutableStateOf(false) }
         var timeAtLocation by remember { mutableStateOf("No location Selected") }
@@ -64,7 +64,7 @@ fun App() {
                         showCountries = false
                     }
                 ) {
-                    countries().forEach { (name, zone) ->
+                    countries.forEach { (name, zone) ->
                         DropdownMenuItem(
                             onClick = {
                                 timeAtLocation = currentTimeAt(name, zone)
