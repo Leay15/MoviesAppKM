@@ -42,6 +42,8 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlinx.datetime)
             implementation(libs.ktor.client.core)
+
+            implementation(libs.kamel.image)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
